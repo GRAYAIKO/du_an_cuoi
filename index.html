@@ -33,10 +33,41 @@
             transition: transform 0.3s ease;
         }
 
+        
+
+            @keyframes fadeInScale {
+        0% {
+            opacity: 0;
+            transform: scale(0.8); 
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1); 
+        }
+        }
+
+        @keyframes updateAnimation {
+        0% {
+            transform: scale(1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        50% {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        100% {
+            transform: scale(1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        }
         .container:hover {
             transform: scale(1.02);
         }
 
+        .container.update {
+            animation: updateAnimation 0.6s ease-in-out;
+            animation: updateAnimation 0.6s ease-in-out;
+        }
         h1 {
             font-size: 2.5em;
             margin-bottom: 20px;
@@ -230,6 +261,14 @@
             const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=vi`;
             const weatherRes = await fetch(weatherUrl);
             const weather = await weatherRes.json();
+
+            // Add 'update' class to trigger animation
+            container.classList.add('update');
+
+            // Remove the class after the animation completes
+            setTimeout(() => {
+                container.classList.remove('update');
+            }, 600); // Duration of the updateAnimation
 
             weatherInfo.style.display = "block";
             document.getElementById("locationName").textContent = displayName;
