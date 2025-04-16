@@ -325,6 +325,23 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             padding: 20px;
+            position: relative; /* Required for stacking context */
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out; /* Swift transition */
+        }
+
+        .weather-content.stack-enter {
+            transform: scale(0.5);
+            opacity: 0;
+        }
+
+        .weather-content.stack-exit {
+            transform: scale(0.5);
+            opacity: 0;
+        }
+
+        .weather-content.stack-current {
+            transform: scale(1);
+            opacity: 1;
         }
 
         .weather-data {
@@ -771,45 +788,65 @@
 
     function updateWeatherDisplay(index = 0) {
         const data = index === 0 ? currentWeather : forecastData[index - 1];
-        if (!data) return; // Thêm kiểm tra này để tránh lỗi
+        if (!data) return;
 
-        const date = index === 0 ? new Date() : data.date;
-        const dateOptions = { weekday: 'long', day: 'numeric', month: 'long' };
+        const weatherContentElement = document.querySelector('.weather-content');
 
-        document.getElementById('date').textContent = 
+        // Prepare for transition
+        weatherContentElement.classList.add(currentForecastIndex > index ? 'stack-exit' : 'stack-enter');
+
+        // Small delay to allow the exit animation to start
+        setTimeout(() => {
+          // Update content after the exit animation has started
+          const date = index === 0 ? new Date() : data.date;
+          const dateOptions = { weekday: 'long', day: 'numeric', month: 'long' };
+
+          document.getElementById('date').textContent =
             date.toLocaleDateString('vi-VN', dateOptions);
-        document.getElementById('temperature').textContent = 
+          document.getElementById('temperature').textContent =
             `Nhiệt độ: ${Math.round(data.temp)}°C`;
-        document.getElementById('description').textContent = 
+          document.getElementById('description').textContent =
             `Thời tiết: ${data.description}`;
-        document.getElementById('humidity').textContent = 
+          document.getElementById('humidity').textContent =
             `Độ ẩm: ${data.humidity}%`;
-        document.getElementById('wind').textContent = 
+          document.getElementById('wind').textContent =
             `Tốc độ gió: ${data.wind} m/s`;
-        document.getElementById('weatherIcon').src = 
+          document.getElementById('weatherIcon').src =
             `https://openweathermap.org/img/wn/${data.icon}@2x.png`;
 
-        // Cập nhật trạng thái nút
-        document.getElementById('prevDay').disabled = index === 0;
-        document.getElementById('nextDay').disabled = index === forecastData.length;
+          // Cập nhật trạng thái nút
+          document.getElementById('prevDay').disabled = index === 0;
+          document.getElementById('nextDay').disabled = index === forecastData.length;
 
-        if (index === 0 && data.weather) {
+          if (index === 0 && data.weather) {
             suggestActivities(data.weather[0].main, data.temp);
-        }
+          }
+
+          // After content is updated, set the "current" class to animate in
+          weatherContentElement.classList.remove('stack-enter', 'stack-exit');
+          weatherContentElement.classList.add('stack-current');
+        }, 50); // Small delay to ensure the exit animation starts
+
+        // Remove the "current" class after the animation completes
+        setTimeout(() => {
+          weatherContentElement.classList.remove('stack-current');
+        }, 500);
     }
 
     // Cập nhật event listeners
     document.getElementById('prevDay').addEventListener('click', () => {
         if (currentForecastIndex > 0) {
-            currentForecastIndex--;
-            updateWeatherDisplay(currentForecastIndex);
+          const prevIndex = currentForecastIndex;
+          currentForecastIndex--;
+          updateWeatherDisplay(currentForecastIndex, prevIndex);
         }
     });
 
     document.getElementById('nextDay').addEventListener('click', () => {
         if (currentForecastIndex < forecastData.length) {
-            currentForecastIndex++;
-            updateWeatherDisplay(currentForecastIndex);
+          const prevIndex = currentForecastIndex;
+          currentForecastIndex++;
+          updateWeatherDisplay(currentForecastIndex, prevIndex);
         }
     });
 
