@@ -467,6 +467,90 @@
             background-repeat: no-repeat !important;
             background-attachment: fixed !important;
         }
+
+        .squall-bg {
+            background: linear-gradient(
+                rgba(0, 0, 0, 0.5),
+                rgba(0, 0, 0, 0.5)
+              ),
+              url('https://images.pexels.com/photos/775219/pexels-photo-775219.jpeg?auto=compress&cs=tinysrgb&w=1920') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            background-attachment: fixed !important;
+        }
+
+        .smoke-bg {
+            background: linear-gradient(
+                rgba(128, 128, 128, 0.4),
+                rgba(128, 128, 128, 0.4)
+              ),
+              url('https://images.pexels.com/photos/361125/pexels-photo-361125.jpeg?auto=compress&cs=tinysrgb&w=1920') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            background-attachment: fixed !important;
+        }
+
+        .haze-bg {
+            background: linear-gradient(
+                rgba(128, 128, 128, 0.4),
+                rgba(128, 128, 128, 0.4)
+              ),
+              url('https://images.pexels.com/photos/739154/pexels-photo-739154.jpeg?auto=compress&cs=tinysrgb&w=1920') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            background-attachment: fixed !important;
+        }
+
+        .fog-bg {
+            background: linear-gradient(
+                rgba(255, 255, 255, 0.3),
+                rgba(255, 255, 255, 0.3)
+              ),
+              url('https://images.pexels.com/photos/158279/fog-forest-trees-158279.jpeg?auto=compress&cs=tinysrgb&w=1920') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            background-attachment: fixed !important;
+        }
+
+        .sand-bg {
+            background: linear-gradient(
+                rgba(244, 164, 96, 0.3),
+                rgba(244, 164, 96, 0.3)
+              ),
+              url('https://images.pexels.com/photos/4498361/pexels-photo-4498361.jpeg?auto=compress&cs=tinysrgb&w=1920') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            background-attachment: fixed !important;
+        }
+
+        .dust-bg {
+            background: linear-gradient(
+                rgba(244, 164, 96, 0.3),
+                rgba(244, 164, 96, 0.3)
+              ),
+              url('https://images.pexels.com/photos/2422915/pexels-photo-2422915.jpeg?auto=compress&cs=tinysrgb&w=1920') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            background-attachment: fixed !important;
+        }
+
+        .ash-bg {
+            background: linear-gradient(
+                rgba(128, 128, 128, 0.4),
+                rgba(128, 128, 128, 0.4)
+              ),
+              url('https://images.pexels.com/photos/139729/pexels-photo-139729.jpeg?auto=compress&cs=tinysrgb&w=1920') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            background-attachment: fixed !important;
+        }
   </style>
 </head>
 <body>
@@ -605,138 +689,211 @@
     }
 
     function suggestActivities(weather, temp) {
-        const suggestionList = document.getElementById('suggestionList');
-        suggestionList.innerHTML = '';
+    const suggestionList = document.getElementById('suggestionList');
+    suggestionList.innerHTML = '';
 
-        // Xóa tất cả hiệu ứng cũ trước
-        document.body.classList.remove('snow-bg', 'dark-clouds-bg', 'light-clouds-bg', 'dark-text', 'rain-bg', 'heavy-rain-bg', 'light-rain-bg', 'thunderstorm-bg', 'clear-sky-bg', 'mist-fog-bg', 'dust-sand-bg', 'haze-smoke-bg', 'tornado-bg', 'hot-sunny-bg');
-        removeSnowflakes();
-        removeClouds();
+    // Xóa tất cả hiệu ứng cũ trước
+    document.body.classList.remove(
+      'snow-bg',
+      'dark-clouds-bg',
+      'light-clouds-bg',
+      'dark-text',
+      'rain-bg',
+      'heavy-rain-bg',
+      'light-rain-bg',
+      'thunderstorm-bg',
+      'clear-sky-bg',
+      'mist-fog-bg',
+      'dust-sand-bg',
+      'haze-smoke-bg',
+      'tornado-bg',
+      'hot-sunny-bg',
+      'squall-bg',
+      'smoke-bg',
+      'haze-bg',
+      'fog-bg',
+      'sand-bg',
+      'dust-bg',
+      'ash-bg'
+    );
+    removeSnowflakes();
+    removeClouds();
 
-        let suggestions = [];
-        // Kiểm tra điều kiện mưa và thay đổi background
-        if (weather.includes('Rain') || weather.includes('Drizzle')) {
-            suggestions = [
-                'Ở nhà xem phim hoặc đọc sách.',
-                'Chuẩn bị ô và áo mưa nếu cần ra ngoài.',
-                'Thưởng thức một tách trà nóng.',
-                'Hòa mình vào những giai điệu êm dịu.'
-            ];
-            
-            // Remove existing weather-related classes
-            
-            // Apply specific rain background based on description
-            const description = weather.toLowerCase();
-            if (description.includes('thunderstorm') || description.includes('sấm')) {
-                document.body.classList.add('thunderstorm-bg');
-            } else if (description.includes('heavy') || description.includes('nặng hạt')) {
-                document.body.classList.add('heavy-rain-bg');
-            } else if (description.includes('light') || description.includes('nhẹ')) {
-                document.body.classList.add('light-rain-bg');
-            } else {
-                document.body.classList.add('rain-bg');
-            }
-        } else if (weather.includes('Clear')) {
-            suggestions = [
-                'Đi dạo công viên hoặc tập thể dục ngoài trời.',
-                'Tổ chức một buổi picnic cùng bạn bè.',
-                'Chụp ảnh phong cảnh dưới ánh nắng.',
-                'Chăm sóc cây cối hoặc trồng thêm hoa và rau.'
-            ];
-            // Thêm background cho trời quang đãng
-            document.body.classList.add('clear-sky-bg');
-            document.body.classList.add('dark-text'); // Để text dễ đọc hơn trên background sáng
-        } else if (weather.includes('Clouds')) {
-            suggestions = [
-                'Thăm bảo tàng hoặc triển lãm nghệ thuật.',
-                'Đi cà phê với bạn bè.',
-                'Tập yoga trong nhà để thư giãn.',
-                'Học vẽ, viết, làm đồ thủ công.'
-            ];
-            
-            const description = document.getElementById("description").textContent.toLowerCase();
-            if (description.includes('u ám') || description.includes('mây đen')) {
-                document.body.classList.add('dark-clouds-bg');
-                createClouds(true);
-            } else {
-                document.body.classList.add('light-clouds-bg');
-                document.body.classList.add('dark-text'); // Thêm class dark-text
-                createClouds(false);
-            }
-        } else if (weather.includes('Snow')) {
-            suggestions = [
-                'Xây người tuyết hoặc chơi ném tuyết.',
-                'Giữ ấm với quần áo dày và khăn quàng.',
-                'Uống chocolate nóng bên lò sưởi.'
-            ];
-            // Thêm background cho tuyết/mùa đông
-            document.body.classList.add('snow-bg');
-            document.body.classList.add('dark-text');
-            createSnowflakes();
-        } else if (weather.includes('Mist') || weather.includes('Fog')) {
-            suggestions = [
-                'Lái xe cẩn thận, bật đèn xe khi di chuyển.',
-                'Giữ ấm cơ thể trong thời tiết ẩm ướt.',
-                'Hạn chế các hoạt động ngoài trời.',
-                'Thư giãn trong nhà với một cuốn sách hay.'
-            ];
-            document.body.classList.add('mist-fog-bg');
-            
-        } else if (weather.includes('Dust') || weather.includes('Sand')) {
-            suggestions = [
-                'Đeo khẩu trang khi ra ngoài.',
-                'Đóng cửa sổ để tránh bụi.',
-                'Hạn chế các hoạt động ngoài trời.',
-                'Vệ sinh nhà cửa sau khi thời tiết cải thiện.'
-            ];
-            document.body.classList.add('dust-sand-bg');
-            
-        } else if (weather.includes('Haze') || weather.includes('Smoke')) {
-            suggestions = [
-                'Đeo khẩu trang bảo vệ.',
-                'Hạn chế hoạt động ngoài trời.',
-                'Đóng cửa sổ và sử dụng máy lọc không khí.',
-                'Uống nhiều nước để giải độc.'
-            ];
-            document.body.classList.add('haze-smoke-bg');
-            
-        } else if (weather.includes('Tornado')) {
-            suggestions = [
-                'Tìm nơi trú ẩn an toàn ngay lập tức.',
-                'Theo dõi cảnh báo thời tiết.',
-                'Chuẩn bị đồ dùng khẩn cấp.',
-                'Tránh xa cửa sổ và đồ vật có thể bay.'
-            ];
-            document.body.classList.add('tornado-bg');
-            
-        } else if (temp < 10) { // Thêm điều kiện cho thời tiết lạnh
-            suggestions.push('Mặc nhiều lớp áo, uống nước ấm và tránh gió lạnh.');
-            document.body.classList.add('snow-bg');
-            document.body.classList.add('dark-text');
-        }
+    let suggestions = [];
+    // Kiểm tra điều kiện mưa và thay đổi background
+    if (weather.includes('Rain') || weather.includes('Drizzle')) {
+      suggestions = [
+        'Ở nhà xem phim hoặc đọc sách.',
+        'Chuẩn bị ô và áo mưa nếu cần ra ngoài.',
+        'Thưởng thức một tách trà nóng.',
+        'Hòa mình vào những giai điệu êm dịu.'
+      ];
 
-        if (temp > 35) { // Thời tiết rất nóng
-            suggestions = [
-                'Uống nhiều nước, tránh mất nước.',
-                'Hạn chế ra ngoài từ 11h-15h.',
-                'Sử dụng kem chống nắng.',
-                'Tìm nơi có điều hòa để tránh nóng.'
-            ];
-            document.body.classList.add('hot-sunny-bg');
-        }
+      // Remove existing weather-related classes
 
-        if (temp > 30) {
-            suggestions.push('Uống đủ nước và tránh tiếp xúc trực tiếp với ánh nắng trong thời gian dài.');
-        } else if (temp < 10) {
-            suggestions.push('Mặc nhiều lớp áo, uống nước ấm và tránh gió lạnh.');
-        }
+      // Apply specific rain background based on description
+      const description = weather.toLowerCase();
+      if (
+        description.includes('thunderstorm') ||
+        description.includes('sấm')
+      ) {
+        document.body.classList.add('thunderstorm-bg');
+      } else if (
+        description.includes('heavy') ||
+        description.includes('nặng hạt')
+      ) {
+        document.body.classList.add('heavy-rain-bg');
+      } else if (description.includes('light') || description.includes('nhẹ')) {
+        document.body.classList.add('light-rain-bg');
+      } else {
+        document.body.classList.add('rain-bg');
+      }
+    } else if (weather.includes('Clear')) {
+      suggestions = [
+        'Đi dạo công viên hoặc tập thể dục ngoài trời.',
+        'Tổ chức một buổi picnic cùng bạn bè.',
+        'Chụp ảnh phong cảnh dưới ánh nắng.',
+        'Chăm sóc cây cối hoặc trồng thêm hoa và rau.'
+      ];
+      // Thêm background cho trời quang đãng
+      document.body.classList.add('clear-sky-bg');
+      document.body.classList.add('dark-text'); // Để text dễ đọc hơn trên background sáng
+    } else if (weather.includes('Clouds')) {
+      suggestions = [
+        'Thăm bảo tàng hoặc triển lãm nghệ thuật.',
+        'Đi cà phê với bạn bè.',
+        'Tập yoga trong nhà để thư giãn.',
+        'Học vẽ, viết, làm đồ thủ công.'
+      ];
 
-        suggestions.forEach(suggestion => {
-            const li = document.createElement('li');
-            li.textContent = suggestion;
-            suggestionList.appendChild(li);
-        });
+      const description = document
+        .getElementById('description')
+        .textContent.toLowerCase();
+      if (
+        description.includes('u ám') ||
+        description.includes('mây đen')
+      ) {
+        document.body.classList.add('dark-clouds-bg');
+        createClouds(true);
+      } else {
+        document.body.classList.add('light-clouds-bg');
+        document.body.classList.add('dark-text'); // Thêm class dark-text
+        createClouds(false);
+      }
+    } else if (weather.includes('Snow')) {
+      suggestions = [
+        'Xây người tuyết hoặc chơi ném tuyết.',
+        'Giữ ấm với quần áo dày và khăn quàng.',
+        'Uống chocolate nóng bên lò sưởi.'
+      ];
+      // Thêm background cho tuyết/mùa đông
+      document.body.classList.add('snow-bg');
+      document.body.classList.add('dark-text');
+      createSnowflakes();
+    } else if (weather.includes('Mist')) {
+      suggestions = [
+        'Lái xe cẩn thận, bật đèn xe khi di chuyển.',
+        'Giữ ấm cơ thể trong thời tiết ẩm ướt.',
+        'Hạn chế các hoạt động ngoài trời.',
+        'Thư giãn trong nhà với một cuốn sách hay.'
+      ];
+      document.body.classList.add('mist-fog-bg');
+    } else if (weather.includes('Fog')) {
+      suggestions = [
+        'Hạn chế ra ngoài nếu không cần thiết.',
+        'Nếu lái xe, bật đèn sương mù và giảm tốc độ.',
+        'Đảm bảo giữ khoảng cách an toàn với xe phía trước.',
+        'Kiểm tra thông tin giao thông trước khi di chuyển.'
+      ];
+      document.body.classList.add('fog-bg');
+    } else if (weather.includes('Dust')) {
+      suggestions = [
+        'Đeo khẩu trang khi ra ngoài.',
+        'Đóng cửa sổ để tránh bụi.',
+        'Hạn chế các hoạt động ngoài trời.',
+        'Vệ sinh nhà cửa sau khi thời tiết cải thiện.'
+      ];
+      document.body.classList.add('dust-bg');
+    } else if (weather.includes('Sand')) {
+      suggestions = [
+        'Đóng kín cửa để tránh cát xâm nhập.',
+        'Sử dụng máy lọc không khí nếu có.',
+        'Tránh lái xe nếu tầm nhìn bị hạn chế.',
+        'Bảo vệ mắt và da khỏi tác động của cát.'
+      ];
+      document.body.classList.add('sand-bg');
+    } else if (weather.includes('Haze')) {
+      suggestions = [
+        'Đeo khẩu trang khi ra ngoài.',
+        'Hạn chế các hoạt động ngoài trời.',
+        'Đóng cửa sổ và sử dụng máy lọc không khí.',
+        'Uống nhiều nước để giải độc.'
+      ];
+      document.body.classList.add('haze-bg');
+    } else if (weather.includes('Smoke')) {
+      suggestions = [
+        'Đeo khẩu trang bảo vệ.',
+        'Hạn chế hoạt động ngoài trời.',
+        'Đóng cửa sổ và sử dụng máy lọc không khí.',
+        'Uống nhiều nước để giải độc.'
+      ];
+      document.body.classList.add('smoke-bg');
+    } else if (weather.includes('Tornado')) {
+      suggestions = [
+        'Tìm nơi trú ẩn an toàn ngay lập tức.',
+        'Theo dõi cảnh báo thời tiết.',
+        'Chuẩn bị đồ dùng khẩn cấp.',
+        'Tránh xa cửa sổ và đồ vật có thể bay.'
+      ];
+      document.body.classList.add('tornado-bg');
+    } else if (weather.includes('Squall')) {
+      suggestions = [
+        'Tìm nơi trú ẩn an toàn.',
+        'Tránh xa các khu vực ven biển.',
+        'Cẩn thận với gió mạnh và sóng lớn.',
+        'Theo dõi thông tin thời tiết địa phương.'
+      ];
+      document.body.classList.add('squall-bg');
+    } else if (weather.includes('Ash')) {
+      suggestions = [
+        'Đeo khẩu trang và kính bảo hộ.',
+        'Ở trong nhà và đóng kín cửa.',
+        'Tránh lái xe nếu không cần thiết.',
+        'Theo dõi thông tin từ cơ quan chức năng.'
+      ];
+      document.body.classList.add('ash-bg');
+    } else if (temp < 10) {
+      // Thêm điều kiện cho thời tiết lạnh
+      suggestions.push('Mặc nhiều lớp áo, uống nước ấm và tránh gió lạnh.');
+      document.body.classList.add('snow-bg');
+      document.body.classList.add('dark-text');
     }
+
+    if (temp > 35) {
+      // Thời tiết rất nóng
+      suggestions = [
+        'Uống nhiều nước, tránh mất nước.',
+        'Hạn chế ra ngoài từ 11h-15h.',
+        'Sử dụng kem chống nắng.',
+        'Tìm nơi có điều hòa để tránh nóng.'
+      ];
+      document.body.classList.add('hot-sunny-bg');
+    }
+
+    if (temp > 30) {
+      suggestions.push(
+        'Uống đủ nước và tránh tiếp xúc trực tiếp với ánh nắng trong thời gian dài.'
+      );
+    } else if (temp < 10) {
+      suggestions.push('Mặc nhiều lớp áo, uống nước ấm và tránh gió lạnh.');
+    }
+
+    suggestions.forEach(suggestion => {
+      const li = document.createElement('li');
+      li.textContent = suggestion;
+      suggestionList.appendChild(li);
+    });
+  }
 
     // Thêm các hàm mới
     function processForecastData(list) {
