@@ -78,6 +78,7 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            justify-content: center;
         }
 
         input[type="text"] {
@@ -550,6 +551,10 @@
             background-position: center !important;
             background-repeat: no-repeat !important;
             background-attachment: fixed !important;
+        }
+
+        .weather-info.active {
+            cursor: grabbing; /* Change cursor during drag */
         }
   </style>
 </head>
@@ -1066,6 +1071,62 @@
             }
         }
     });
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let isDragging = false; // Flag to indicate dragging
+
+    weatherInfo.addEventListener('mousedown', e => {
+      touchStartX = e.clientX; // Use clientX for mouse coordinates
+      isDragging = true;
+      weatherInfo.classList.add('active'); // Add a class for visual feedback
+    });
+
+    weatherInfo.addEventListener('mouseup', e => {
+      if (isDragging) {
+        touchEndX = e.clientX;
+        handleSwipe();
+        isDragging = false;
+        weatherInfo.classList.remove('active');
+      }
+    });
+
+    weatherInfo.addEventListener('mouseleave', e => {
+      if (isDragging) {
+        touchEndX = e.clientX;
+        handleSwipe();
+        isDragging = false;
+        weatherInfo.classList.remove('active');
+      }
+    });
+
+    weatherInfo.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    weatherInfo.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      const swipeThreshold = 50; // Minimum distance to register a swipe
+      const swipeDistance = touchEndX - touchStartX;
+
+      if (swipeDistance > swipeThreshold) {
+        // Swipe right (previous day)
+        if (currentForecastIndex > 0) {
+          currentForecastIndex--;
+          updateWeatherDisplay(currentForecastIndex);
+        }
+      } else if (swipeDistance < -swipeThreshold) {
+        // Swipe left (next day)
+        if (currentForecastIndex < forecastData.length) {
+          currentForecastIndex++;
+          updateWeatherDisplay(currentForecastIndex);
+        }
+      }
+    }
   </script>
 </body>
 </html>
