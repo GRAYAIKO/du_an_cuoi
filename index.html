@@ -764,13 +764,6 @@
       document.body.classList.add('clear-sky-bg');
       document.body.classList.add('dark-text'); // Để text dễ đọc hơn trên background sáng
     } else if (weather.includes('Clouds')) {
-      suggestions = [
-        'Thăm bảo tàng hoặc triển lãm nghệ thuật.',
-        'Đi cà phê với bạn bè.',
-        'Tập yoga trong nhà để thư giãn.',
-        'Học vẽ, viết, làm đồ thủ công.'
-      ];
-
       const description = document
         .getElementById('description')
         .textContent.toLowerCase();
@@ -778,9 +771,22 @@
         description.includes('u ám') ||
         description.includes('mây đen')
       ) {
+        suggestions = [
+          'Nghe podcast hoặc audiobook.',
+          'Nấu một món ăn mới.',
+          'Chơi trò chơi trong nhà.',
+          'Đem theo ô hoặc áo mưa khi ra ngoài.',
+          'Đọc sách hoặc viết nhật ký.'
+        ];
         document.body.classList.add('dark-clouds-bg');
         createClouds(true);
       } else {
+        suggestions = [
+          'Thăm bảo tàng hoặc triển lãm nghệ thuật.',
+          'Đi cà phê với bạn bè.',
+          'Tập yoga trong nhà để thư giãn.',
+          'Học vẽ, viết, làm đồ thủ công.'
+        ];
         document.body.classList.add('light-clouds-bg');
         document.body.classList.add('dark-text'); // Thêm class dark-text
         createClouds(false);
@@ -867,22 +873,18 @@
         'Theo dõi thông tin từ cơ quan chức năng.'
       ];
       document.body.classList.add('ash-bg');
-    } else if (temp < 10) {
-      // Thêm điều kiện cho thời tiết lạnh
-      suggestions.push('Mặc nhiều lớp áo, uống nước ấm và tránh gió lạnh.');
-      document.body.classList.add('snow-bg');
-      document.body.classList.add('dark-text');
-    }
-
-    if (temp > 35) {
-      // Thời tiết rất nóng
-      suggestions = [
-        'Uống nhiều nước, tránh mất nước.',
-        'Hạn chế ra ngoài từ 11h-15h.',
-        'Sử dụng kem chống nắng.',
-        'Tìm nơi có điều hòa để tránh nóng.'
-      ];
-      document.body.classList.add('hot-sunny-bg');
+    } else {
+      // Default condition if none of the above match
+      if (temp >= 35) {
+        // Thời tiết rất nóng
+        suggestions = [
+          'Uống nhiều nước, tránh mất nước.',
+          'Hạn chế ra ngoài từ 11h-15h.',
+          'Sử dụng kem chống nắng.',
+          'Tìm nơi có điều hòa để tránh nóng.'
+        ];
+        document.body.classList.add('hot-sunny-bg');
+      }
     }
 
     if (temp > 30) {
